@@ -5,6 +5,12 @@
   padding: 0;
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f7fa;
@@ -13,35 +19,36 @@ body {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+  padding: 1vh 1vw;
+  overflow: hidden;
 }
 
 /* Header */
 .header {
   background-color: #1a1a2e;
   color: white;
-  padding: 1rem;
+  padding: 0.8vh 1vw;
   text-align: center;
   border-radius: 8px;
-  margin-bottom: 2rem;
+  margin-bottom: 1vh;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .exchange-rates-update {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #aaa;
-  margin-top: 0.5rem;
+  margin-top: 0.2vh;
 }
 
 .header h1 {
-  margin-bottom: 10px;
-  font-size: 2rem;
+  margin-bottom: 0.5vh;
+  font-size: 1.8rem;
 }
 
 .date {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   opacity: 0.8;
 }
 
@@ -49,28 +56,30 @@ body {
 .controls {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 1vh;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 1vw;
 }
 
 .select-container {
   display: flex;
   flex-direction: column;
-  min-width: 200px;
+  min-width: 180px;
+  flex: 1;
 }
 
 label {
-  margin-bottom: 5px;
+  margin-bottom: 0.3vh;
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 select {
-  padding: 10px;
+  padding: 0.5vh 0.5vw;
   border-radius: 4px;
   border: 1px solid #ddd;
   background-color: white;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 
@@ -78,26 +87,27 @@ select {
 .price-info {
   background-color: white;
   border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 1vh 1vw;
+  margin-bottom: 1vh;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
 
 .current-price h2 {
-  margin-bottom: 10px;
+  margin-bottom: 0.5vh;
   color: #2c3e50;
+  font-size: 1.2rem;
 }
 
 .price {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 0.3vh;
   color: #2c3e50;
 }
 
 .change {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -112,9 +122,29 @@ select {
 /* Container de gráficos */
 .charts-container {
   display: grid;
+  gap: 1.5vh;
+  height: calc(100vh - 25vh);
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+/* Layouts de visualização */
+.charts-container.vertical {
   grid-template-columns: 1fr;
-  gap: 30px;
-  margin-bottom: 40px;
+}
+
+.charts-container.grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.charts-container.fullscreen .chart-card {
+  height: calc(100vh - 25vh - 3vh);
+}
+
+.crypto-monitor {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .chart-card {
@@ -122,19 +152,46 @@ select {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: calc((100vh - 25vh - 3vh) / 3);
+  position: relative;
+}
+
+.charts-container.grid .chart-card {
+  height: calc((100vh - 25vh - 3vh) / 2);
 }
 
 .chart-card h3 {
-  padding: 15px;
+  padding: 0.8vh 1vw;
   background-color: #f8f9fa;
   border-bottom: 1px solid #eee;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #2c3e50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fullscreen-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.fullscreen-toggle:hover {
+  background-color: #e6e6e6;
+  color: #333;
 }
 
 .chart {
-  height: 500px;
-  padding: 20px;
+  height: calc(100% - 5vh);
+  padding: 0.5vh 0.5vw;
 }
 
 /* D3 Chart específico */
@@ -147,47 +204,69 @@ select {
   font-size: 12px;
 }
 
-/* Botão de expansão para tela cheia */
-.expand-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
+/* Menu de visualização dos gráficos */
+.chart-view-menu {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1vh;
+  padding: 5px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.view-button {
+  background-color: white;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
   display: flex;
   align-items: center;
-  gap: 5px;
-  z-index: 10;
+  justify-content: center;
   transition: all 0.2s ease;
 }
 
-.expand-button:hover {
+.view-button:hover {
   background-color: #f0f0f0;
 }
 
+.view-button.active {
+  background-color: #e6f7ff;
+  border-color: #1890ff;
+  color: #1890ff;
+}
+
 /* Estilo para gráfico em tela cheia */
-.chart-card.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
+.charts-container.fullscreen {
+  grid-template-columns: 1fr;
+}
+
+.charts-container.fullscreen .chart-card {
+  position: relative;
   width: 100%;
-  height: 100%;
-  z-index: 1000;
-  border-radius: 0;
+  height: calc(100vh - 25vh - 3vh);
+  z-index: 1;
+  border-radius: 8px;
+  display: none;
 }
 
-.chart-card.fullscreen .chart {
-  height: calc(100% - 60px);
-  padding: 20px;
+/* Mostrar apenas o gráfico selecionado em modo tela cheia */
+.charts-container.fullscreen .chart-card.active {
+  display: block;
 }
 
-.chart-card.fullscreen h3 {
-  padding: 20px;
-  font-size: 1.3rem;
+.charts-container.fullscreen .chart-card .chart {
+  height: calc(100% - 5vh);
+  padding: 1vh 1vw;
+}
+
+.charts-container.fullscreen .chart-card h3 {
+  padding: 1vh 1vw;
+  font-size: 1.2rem;
+  background-color: #1a1a2e;
+  color: white;
 }
 
 /* Estados de carregamento e erro */
@@ -230,10 +309,25 @@ select {
   }
   
   .header h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
   
   .price {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+  
+  .chart-card {
+    height: calc((100vh - 25vh - 3vh) / 3);
+  }
+}
+
+@media (min-width: 1200px) {
+  .charts-container {
+    grid-template-columns: repeat(3, 1fr);
+    height: calc(100vh - 20vh);
+  }
+  
+  .chart-card {
+    height: calc(100vh - 20vh);
   }
 }
