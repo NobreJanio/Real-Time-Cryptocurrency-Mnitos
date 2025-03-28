@@ -1,3 +1,52 @@
+/* Variáveis de tema */
+:root {
+  /* Tema claro (padrão) */
+  --bg-color: #f5f7fa;
+  --text-color: #333;
+  --header-bg: #1a1a2e;
+  --header-text: white;
+  --card-bg: white;
+  --card-header-bg: #f8f9fa;
+  --card-border: #eee;
+  --menu-bg: #f8f9fa;
+  --button-bg: white;
+  --button-border: #ddd;
+  --button-active-bg: #e6f7ff;
+  --button-active-border: #1890ff;
+  --button-active-color: #1890ff;
+  --button-hover-bg: #f0f0f0;
+  --fullscreen-header-bg: #1a1a2e;
+  --fullscreen-header-text: white;
+  --tooltip-bg: white;
+  --tooltip-border: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --shadow-header: rgba(0, 0, 0, 0.1);
+}
+
+/* Tema escuro */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --header-bg: #1e1e30;
+  --header-text: #f0f0f0;
+  --card-bg: #1e1e2f;
+  --card-header-bg: #252538;
+  --card-border: #2c2c3a;
+  --menu-bg: #252538;
+  --button-bg: #2c2c3a;
+  --button-border: #3a3a4a;
+  --button-active-bg: #1f3a57;
+  --button-active-border: #1890ff;
+  --button-active-color: #1890ff;
+  --button-hover-bg: #3a3a4a;
+  --fullscreen-header-bg: #1e1e30;
+  --fullscreen-header-text: #f0f0f0;
+  --tooltip-bg: #252538;
+  --tooltip-border: #3a3a4a;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --shadow-header: rgba(0, 0, 0, 0.3);
+}
+
 /* Estilos globais */
 * {
   box-sizing: border-box;
@@ -13,9 +62,10 @@ html, body {
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -27,13 +77,13 @@ body {
 
 /* Header */
 .header {
-  background-color: #1a1a2e;
-  color: white;
+  background-color: var(--header-bg);
+  color: var(--header-text);
   padding: 0.8vh 1vw;
   text-align: center;
   border-radius: 8px;
   margin-bottom: 1vh;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px var(--shadow-header);
 }
 
 .exchange-rates-update {
@@ -85,11 +135,11 @@ select {
 
 /* Informações de preço */
 .price-info {
-  background-color: white;
+  background-color: var(--card-bg);
   border-radius: 8px;
   padding: 1vh 1vw;
   margin-bottom: 1vh;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px var(--shadow-color);
   text-align: center;
 }
 
@@ -148,10 +198,10 @@ select {
 }
 
 .chart-card {
-  background-color: white;
+  background-color: var(--card-bg);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px var(--shadow-color);
   height: calc((100vh - 25vh - 3vh) / 3);
   position: relative;
 }
@@ -162,10 +212,10 @@ select {
 
 .chart-card h3 {
   padding: 0.8vh 1vw;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #eee;
+  background-color: var(--card-header-bg);
+  border-bottom: 1px solid var(--card-border);
   font-size: 1rem;
-  color: #2c3e50;
+  color: var(--text-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -207,18 +257,23 @@ select {
 /* Menu de visualização dos gráficos */
 .chart-view-menu {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1vh;
-  padding: 5px;
-  background-color: #f8f9fa;
+  padding: 5px 15px;
+  background-color: var(--menu-bg);
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.view-buttons {
+  display: flex;
+  gap: 10px;
 }
 
 .view-button {
-  background-color: white;
-  border: 1px solid #ddd;
+  background-color: var(--button-bg);
+  border: 1px solid var(--button-border);
   border-radius: 4px;
   padding: 8px;
   cursor: pointer;
@@ -229,13 +284,13 @@ select {
 }
 
 .view-button:hover {
-  background-color: #f0f0f0;
+  background-color: var(--button-hover-bg);
 }
 
 .view-button.active {
-  background-color: #e6f7ff;
-  border-color: #1890ff;
-  color: #1890ff;
+  background-color: var(--button-active-bg);
+  border-color: var(--button-active-border);
+  color: var(--button-active-color);
 }
 
 /* Estilo para gráfico em tela cheia */
@@ -265,17 +320,17 @@ select {
 .charts-container.fullscreen .chart-card h3 {
   padding: 1vh 1vw;
   font-size: 1.2rem;
-  background-color: #1a1a2e;
-  color: white;
+  background-color: var(--fullscreen-header-bg);
+  color: var(--fullscreen-header-text);
 }
 
 /* Estados de carregamento e erro */
 .loading, .error {
   text-align: center;
   padding: 40px;
-  background-color: white;
+  background-color: var(--card-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .error {
@@ -285,13 +340,43 @@ select {
 /* Tooltip personalizado para D3 */
 .d3-tooltip {
   position: absolute;
-  background-color: white;
-  border: 1px solid #ddd;
+  background-color: var(--tooltip-bg);
+  border: 1px solid var(--tooltip-border);
   border-radius: 4px;
   padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px var(--shadow-color);
   pointer-events: none;
   z-index: 1000;
+}
+
+/* Botão de alternância de tema */
+.theme-toggle {
+  background-color: var(--button-bg);
+  border: 1px solid var(--button-border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+  position: relative;
+  margin-left: 10px;
+}
+
+.theme-toggle:hover {
+  background-color: var(--button-hover-bg);
+  transform: rotate(15deg);
+}
+
+.theme-toggle.dark {
+  color: #f0f0f0;
+}
+
+.theme-toggle.light {
+  color: #333;
 }
 
 /* Responsividade */

@@ -20,6 +20,7 @@ function CryptoMonitor() {
   const [chartView, setChartView] = useState('vertical'); // 'vertical', 'grid', ou 'fullscreen'
   const [fullscreenChart, setFullscreenChart] = useState(0); // 0: D3, 1: Recharts, 2: uPlot
   const [lastRatesUpdate, setLastRatesUpdate] = useState(0);
+  const [theme, setTheme] = useState('light'); // 'light' ou 'dark'
 
   // Fetch exchange rates and update the last update timestamp
   useEffect(() => {
@@ -147,6 +148,16 @@ function CryptoMonitor() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [chartView]);
   
+  // Efeito para aplicar o tema ao elemento HTML
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+  
+  // Função para alternar entre os temas claro e escuro
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  };
+  
   // Função para alternar para o modo tela cheia com um gráfico específico
   const toggleFullscreen = (chartIndex) => {
     if (chartView === 'fullscreen' && fullscreenChart === chartIndex) {
@@ -247,7 +258,9 @@ function CryptoMonitor() {
               } else {
                 setChartView(view);
               }
-            }} 
+            }}
+            theme={theme}
+            toggleTheme={toggleTheme}
           />
 
           <div className={`charts-container ${chartView}`}>

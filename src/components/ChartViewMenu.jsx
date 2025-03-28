@@ -1,27 +1,25 @@
 import React from 'react';
+import ThemeToggle from './ThemeToggle';
 
-const ChartViewMenu = ({ currentView, onViewChange }) => {
+const ChartViewMenu = ({ currentView, onViewChange, theme, toggleTheme }) => {
   return (
     <div className="chart-view-menu">
-      <button
-        className={`view-button ${currentView === 'vertical' ? 'active' : ''}`}
-        onClick={() => onViewChange('vertical')}
-      >
-        Vertical
-      </button>
-      <button
-        className={`view-button ${currentView === 'grid' ? 'active' : ''}`}
-        onClick={() => onViewChange('grid')}
-      >
-        Grid
-      </button>
-      {/* Removendo o terceiro ícone e suas funcionalidades */}
-      {/* <button
-        className={`view-button ${currentView === 'fullscreen' ? 'active' : ''}`}
-        onClick={() => onViewChange('fullscreen')}
-      >
-        Fullscreen
-      </button> */}
+      <div className="view-buttons">
+        <button
+          className={`view-button ${currentView === 'vertical' ? 'active' : ''}`}
+          onClick={() => onViewChange('vertical')}
+        >
+          Vertical
+        </button>
+        <button
+          className={`view-button ${currentView === 'grid' ? 'active' : ''}`}
+          onClick={() => onViewChange('grid')}
+        >
+          Grid
+        </button>
+      </div>
+      
+      <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
     </div>
   );
 };
